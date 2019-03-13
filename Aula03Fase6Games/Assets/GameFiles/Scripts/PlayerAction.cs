@@ -17,10 +17,15 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	//Se aperta o botão esquerdo do mouse
+        Shoot();
+
+    }
+
+    void Shoot(){
+                //Se aperta o botão esquerdo do mouse
         if (Input.GetButtonDown("Fire1"))
         {
-        	//Armazena na variável 'createdBullet' a função que instancia o objeto bullet
+            //Armazena na variável 'createdBullet' a função que instancia o objeto bullet
             GameObject createdBullet = Instantiate(bullet);
             //Transforma a posição do objeto dentro da variável 'createdBullet' para a mesma posição do objeto que esse script está anexado
             createdBullet.transform.position = transform.position;
@@ -31,8 +36,5 @@ public class PlayerAction : MonoBehaviour
             //Modifica a velocidade do objeto dentro da variável 'bulletRB'
             bulletRB.velocity = cam.transform.rotation * Vector3.forward * speed;
         }
-
-        
-        
     }
 }
