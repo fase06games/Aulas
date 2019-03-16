@@ -1,0 +1,15 @@
+{
+ "folders":
+ [
+  {
+  "follow_symlinks": true,
+  "path": "Assets/GameFiles/Scripts",
+   "file_exclude_patterns":
+   [
+    "*.dll",
+    "*.meta"
+   ]
+  }
+ ],
+ "solution_file": "./fase 06 teste.sln"
+}
