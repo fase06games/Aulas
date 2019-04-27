@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GameFiles/Scenes/MenuBluetooth.unity
-    guid: 031295a2e026c524abb6634506dc39cd
+    path: Assets/GameFiles/Scenes/CenaPrincipal.unity
+    guid: c37a64d85ea1f9944bc0c89020324557
   m_configObjects: {}
