@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 451001353}
   - component: {fileID: 451001352}
   - component: {fileID: 451001354}
+  - component: {fileID: 451001355}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -316,6 +317,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 3584220270415718965, guid: 02f92cff36221d245adc7833bbb144f6, type: 3}
   speed: 10
+  arduino: {fileID: 451001355}
+--- !u!114 &451001355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451001350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18693ebafcadbd946819d3efdbe66bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &494870401
 GameObject:
   m_ObjectHideFlags: 0
