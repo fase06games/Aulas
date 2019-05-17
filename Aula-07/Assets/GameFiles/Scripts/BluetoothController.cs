@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TechTweaking.Bluetooth;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BluetoothController : MonoBehaviour
 {
@@ -10,12 +11,17 @@ public class BluetoothController : MonoBehaviour
 	private BluetoothDevice device;
 	public Text statusText;
 
+	private bool isShooting = false;
+
 	void Awake()
 	{
 		BluetoothAdapter.enableBluetooth();
 
 		device = new BluetoothDevice();
 		device.Name = "BT_Controller01"; //Colocar o nome do seu bluetooth aqui a esquerda
+		device.setEndByte(255);
+		device.ReadingCoroutine = ManageConnection;
+		DontDestroyOnLoad(this.gameObject);
 
 	}
 
@@ -44,13 +50,54 @@ public class BluetoothController : MonoBehaviour
 		statusText.text = "Status: sending hello";
 	}
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void Play()
     {
-        
+    	SceneManager.LoadScene("MainScene");
     }
 
-    // Update is called once per frame
+    IEnumerator ManageConnection(BluetoothDevice device)
+    {
+    	statusText.text = "Status: Connected & Can Read";
+    	while(device.IsConnected && device.IsReading)
+    	{
+    		BtPackets packets = device.readAllPackets();
+
+    		if(packets != null)
+    		{
+    			int n = packets.Count - 1;
+    			int index = packets.get_packet_offset_index(n);
+    			int size = packets.get_packet_size(n);
+
+    			if(size == 2)
+    			{
+    				int fire = (packets.Buffer[index + 1] << 8) | packets.Buffer[index];
+    				fire = fire >> 3;
+
+    				if(statusText !=null)
+    				{
+    					statusText.text = fire.ToString();
+    				}
+
+    				if(fire == 1)
+    				{
+    					isShooting = true;
+    				}
+    				else if(fire == 0)
+    				{
+    					isShooting = false;
+    				}
+    				
+
+    			}
+    		}
+    		yield return null;
+    	}
+
+    		
+    }
+
+    /* Update is called once per frame
     void Update()
     {
         if(device.IsConnected && device.IsReading){
@@ -61,4 +108,5 @@ public class BluetoothController : MonoBehaviour
         	}
         }
     }
+    */
 }
