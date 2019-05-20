@@ -1,8 +1,6 @@
-//-----------------------------------------------------------------------
-// <copyright file="PermissionsDemoBuildProcessor.cs" company="Google Inc.">
-// Copyright 2017 Google Inc. All rights reserved.
+﻿// Copyright 2017 Google Inc. All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0(the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -13,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </copyright>
-//-----------------------------------------------------------------------
 
 // Only invoke custom build processor when building for Android.
 #if UNITY_ANDROID
@@ -29,11 +25,7 @@ namespace GoogleVR.Demos
     using UnityEditor.Build.Reporting;
 #endif
 
-#if UNITY_2018_1_OR_NEWER
-    class PermissionsDemoBuildProcessor : IPreprocessBuildWithReport, IPostprocessBuildWithReport
-#else
     class PermissionsDemoBuildProcessor : IPreprocessBuild, IPostprocessBuild
-#endif
     {
         private const string SCENE_NAME_PERMISSIONS_DEMO = "PermissionsDemo";
 
@@ -104,7 +96,7 @@ namespace GoogleVR.Demos
                 return;
             }
 
-            string[] androidVrSDKsAppended = new string[androidVrSDKs.Length + 1];
+            string[] androidVrSDKsAppended = new string[androidVrSDKs.Length+1];
 
             for (int i = 0; i < androidVrSDKs.Length; i++)
             {
@@ -134,9 +126,7 @@ namespace GoogleVR.Demos
         public void OnPostprocessBuild(BuildTarget target, string path)
         {
             if (!m_cardboardAddedFromCode)
-            {
                 return;
-            }
 
             string[] androidVrSDKs = VREditor.GetVREnabledDevicesOnTargetGroup(BuildTargetGroup.Android);
 

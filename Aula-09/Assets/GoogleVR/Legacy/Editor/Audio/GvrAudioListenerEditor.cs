@@ -1,5 +1,3 @@
-//-----------------------------------------------------------------------
-// <copyright file="GvrAudioListenerEditor.cs" company="Google Inc.">
 // Copyright 2016 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </copyright>
-//-----------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEditor;
@@ -25,63 +21,51 @@ using System.Collections;
 /// A custom editor for properties on the GvrAudioListener script. This appears in the Inspector
 /// window of a GvrAudioListener object.
 [CustomEditor(typeof(GvrAudioListener))]
-public class GvrAudioListenerEditor : Editor
-{
-    private SerializedProperty globalGainDb = null;
+public class GvrAudioListenerEditor : Editor {
+  private SerializedProperty globalGainDb = null;
+  private SerializedProperty occlusionMask = null;
+  private SerializedProperty quality = null;
 
-    private SerializedProperty occlusionMask = null;
+  private GUIContent globalGainLabel = new GUIContent("Global Gain (dB)",
+     "Sets the global gain of the system. Can be used to adjust the overall output volume.");
+  private GUIContent occlusionMaskLabel = new GUIContent("Occlusion Mask",
+     "Sets the global layer mask for occlusion detection.");
+  private GUIContent qualityLabel = new GUIContent("Quality",
+     "Sets the quality mode in which the spatial audio will be rendered. " +
+     "Higher quality modes allow for increased fidelity at the cost of greater CPU usage.");
 
-    private SerializedProperty quality = null;
+  void OnEnable () {
+    globalGainDb = serializedObject.FindProperty("globalGainDb");
+    occlusionMask = serializedObject.FindProperty("occlusionMask");
+    quality = serializedObject.FindProperty("quality");
+  }
 
-    private GUIContent globalGainLabel = new GUIContent(
-            "Global Gain (dB)",
-            "Sets the global gain of the system. Can be used to adjust the overall output volume.");
+  /// @cond
+  public override void OnInspectorGUI () {
+    serializedObject.Update();
 
-    private GUIContent occlusionMaskLabel = new GUIContent(
-            "Occlusion Mask",
-            "Sets the global layer mask for occlusion detection.");
+    // Add clickable script field, as would have been provided by DrawDefaultInspector()
+    MonoScript script = MonoScript.FromMonoBehaviour (target as MonoBehaviour);
+    EditorGUI.BeginDisabledGroup (true);
+    EditorGUILayout.ObjectField ("Script", script, typeof(MonoScript), false);
+    EditorGUI.EndDisabledGroup ();
 
-    private const string QUALITY_LABEL_DESCRIPTION =
-        "Sets the quality mode in which the spatial audio will be rendered. " +
-        "Higher quality modes allow for increased fidelity at the cost of greater CPU usage.";
+    // Rendering quality can only be modified through the Inspector in Edit mode.
+    EditorGUI.BeginDisabledGroup (EditorApplication.isPlaying);
+    EditorGUILayout.PropertyField(quality, qualityLabel);
+    EditorGUI.EndDisabledGroup ();
 
-    private GUIContent qualityLabel = new GUIContent("Quality", QUALITY_LABEL_DESCRIPTION);
+    EditorGUILayout.Separator();
 
-    void OnEnable()
-    {
-        globalGainDb = serializedObject.FindProperty("globalGainDb");
-        occlusionMask = serializedObject.FindProperty("occlusionMask");
-        quality = serializedObject.FindProperty("quality");
-    }
+    EditorGUILayout.Slider(globalGainDb, GvrAudio.minGainDb, GvrAudio.maxGainDb, globalGainLabel);
 
-    /// @cond
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
+    EditorGUILayout.Separator();
 
-        // Add clickable script field, as would have been provided by DrawDefaultInspector()
-        MonoScript script = MonoScript.FromMonoBehaviour(target as MonoBehaviour);
-        EditorGUI.BeginDisabledGroup(true);
-        EditorGUILayout.ObjectField("Script", script, typeof(MonoScript), false);
-        EditorGUI.EndDisabledGroup();
+    EditorGUILayout.PropertyField(occlusionMask, occlusionMaskLabel);
 
-        // Rendering quality can only be modified through the Inspector in Edit mode.
-        EditorGUI.BeginDisabledGroup(EditorApplication.isPlaying);
-        EditorGUILayout.PropertyField(quality, qualityLabel);
-        EditorGUI.EndDisabledGroup();
-
-        EditorGUILayout.Separator();
-
-        EditorGUILayout.Slider(globalGainDb, GvrAudio.minGainDb, GvrAudio.maxGainDb, globalGainLabel);
-
-        EditorGUILayout.Separator();
-
-        EditorGUILayout.PropertyField(occlusionMask, occlusionMaskLabel);
-
-        serializedObject.ApplyModifiedProperties();
-    }
-
-    /// @endcond
+    serializedObject.ApplyModifiedProperties();
+  }
+  /// @endcond
 }
 
 #pragma warning restore 0618 // Restore warnings

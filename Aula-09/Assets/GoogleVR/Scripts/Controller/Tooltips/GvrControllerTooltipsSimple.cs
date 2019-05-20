@@ -1,6 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="GvrControllerTooltipsSimple.cs" company="Google Inc.">
-// Copyright 2017 Google Inc. All rights reserved.
+﻿// Copyright 2017 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </copyright>
-//-----------------------------------------------------------------------
 
 // The controller is not available for versions of Unity without the
 // GVR native integration.
@@ -24,66 +20,52 @@ using System.Collections;
 
 /// A lightweight tooltip designed to minimize draw calls.
 [ExecuteInEditMode]
-[HelpURL("https://developers.google.com/vr/unity/reference/class/GvrControllerTooltipsSimple")]
-public class GvrControllerTooltipsSimple : MonoBehaviour, IGvrArmModelReceiver
-{
-    private MeshRenderer tooltipRenderer;
+public class GvrControllerTooltipsSimple : MonoBehaviour, IGvrArmModelReceiver {
 
-    /// <summary>Arm model used to position the controller.</summary>
-    public GvrBaseArmModel ArmModel { get; set; }
+  private MeshRenderer tooltipRenderer;
 
-    private MaterialPropertyBlock materialPropertyBlock;
-    private int colorId;
+  public GvrBaseArmModel ArmModel { get; set; }
 
-    void Awake()
-    {
-        Initialize();
+  private MaterialPropertyBlock materialPropertyBlock;
+  private int colorId;
+
+  void Awake() {
+    Initialize();
+  }
+
+  void OnEnable() {
+    GvrControllerInput.OnPostControllerInputUpdated += OnPostControllerInputUpdated;
+  }
+
+  void OnDisable() {
+    GvrControllerInput.OnPostControllerInputUpdated -= OnPostControllerInputUpdated;
+  }
+
+  void OnValidate() {
+    if (!Application.isPlaying){
+      Initialize();
+      OnVisualUpdate();
     }
+  }
 
-    void OnEnable()
-    {
-        GvrControllerInput.OnPostControllerInputUpdated += OnPostControllerInputUpdated;
+  private void Initialize(){
+    if(tooltipRenderer == null){
+      tooltipRenderer = GetComponent<MeshRenderer>();
     }
-
-    void OnDisable()
-    {
-        GvrControllerInput.OnPostControllerInputUpdated -= OnPostControllerInputUpdated;
+    if(materialPropertyBlock == null){
+      materialPropertyBlock = new MaterialPropertyBlock();
     }
+    colorId = Shader.PropertyToID("_Color");
+  }
 
-    void OnValidate()
-    {
-        if (!Application.isPlaying)
-        {
-            Initialize();
-            OnVisualUpdate();
-        }
-    }
+  private void OnPostControllerInputUpdated() {
+    OnVisualUpdate();
+  }
 
-    private void Initialize()
-    {
-        if (tooltipRenderer == null)
-        {
-            tooltipRenderer = GetComponent<MeshRenderer>();
-        }
+  protected void OnVisualUpdate () {
 
-        if (materialPropertyBlock == null)
-        {
-            materialPropertyBlock = new MaterialPropertyBlock();
-        }
-
-        colorId = Shader.PropertyToID("_Color");
-    }
-
-    private void OnPostControllerInputUpdated()
-    {
-        OnVisualUpdate();
-    }
-
-    /// <summary>Updates the tooltip visualation based on the arm model.</summary>
-    protected void OnVisualUpdate()
-    {
-        float alpha = ArmModel != null ? ArmModel.TooltipAlphaValue : 1.0f;
-        materialPropertyBlock.SetColor(colorId, new Color(1, 1, 1, alpha));
-        tooltipRenderer.SetPropertyBlock(materialPropertyBlock);
-    }
+    float alpha = ArmModel != null ? ArmModel.TooltipAlphaValue : 1.0f;
+    materialPropertyBlock.SetColor(colorId, new Color(1,1,1,alpha));
+    tooltipRenderer.SetPropertyBlock(materialPropertyBlock);
+  }
 }

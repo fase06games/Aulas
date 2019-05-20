@@ -12,13 +12,13 @@ public class MonsterCatch : MonoBehaviour
 		monsterCounter = FindObjectOfType<MonsterCounter>();
 	}
 
-	void OnCollisionEnter(Collision other)
-	{
-		if(other.gameObject.tag == "Monster")
-		{
-			monsterCounter.Increment();
-			Destroy(other.gameObject);
-			Destroy(this.gameObject);
-		}
-	}
+    void OnCollisionEnter(Collision col)
+    {
+    	if(col.gameObject.tag == "Monster")
+    	{
+    		Destroy(col.gameObject);
+    		Destroy(gameObject);
+    		monsterCounter.increment();
+    	}
+    }
 }
