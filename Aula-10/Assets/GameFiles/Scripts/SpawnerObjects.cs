@@ -13,6 +13,17 @@ public class SpawnerObjects : MonoBehaviour
 	private int maxCount;
 	private int count = 0;
 	private GameObject randomObject;
+    private int spawnerLife = 100;
+    public GameObject disabledSpawner;
+    private bool stop = false;
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "Bullet")
+        {
+            spawnerLife -= 50;
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -39,6 +50,15 @@ public class SpawnerObjects : MonoBehaviour
         if(count >= maxCount)
         {
         	CancelInvoke();
+
+        }
+
+        if(spawnerLife < 0 && stop != true)
+        {
+            CancelInvoke();
+            GameObject disableObj = Instantiate(disabledSpawner);
+            disabledSpawner.transform.position = transform.position;
+            stop = true;
         }
     }
 
