@@ -159,7 +159,7 @@ Prefab:
       value: 
       objectReference: {fileID: 1168548481}
     - target: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
-      propertyPath: controllerPointers.Array.data[0]
+      propertyPath: controllerPointer
       value: 
       objectReference: {fileID: 189115713}
     - target: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
@@ -260,7 +260,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 148680885}
           m_MethodName: TeleportRandomly
-          m_Mode: 0
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -575,10 +575,6 @@ Prefab:
     - target: {fileID: 1820761120, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 555767533, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
-      propertyPath: m_Name
-      value: GvrControllerPointer0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
@@ -1059,7 +1055,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 955127921}
           m_MethodName: TeleportRandomly
-          m_Mode: 0
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1250,6 +1246,29 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   maxRaycastHits: 64
+--- !u!1 &1136815077 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 195966, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
+  m_PrefabInternal: {fileID: 83144409}
+--- !u!114 &1136815078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136815077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2d286fc7c3e427bbde238c0ebb970b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_launchVrHomeButton: {fileID: 0}
+  m_demoInputManager: {fileID: 1136815079}
+--- !u!114 &1136815079 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f,
+    type: 2}
+  m_PrefabInternal: {fileID: 83144409}
+  m_Script: {fileID: 11500000, guid: ddd25f1308577456cbaa207901961126, type: 3}
 --- !u!1001 &1163767423
 Prefab:
   m_ObjectHideFlags: 0
@@ -1289,11 +1308,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114055343288806878, guid: 87c35d808850c410ca0e398a8da84e68,
-        type: 2}
-      propertyPath: safetyRing
-      value: 
-      objectReference: {fileID: 1725746395}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87c35d808850c410ca0e398a8da84e68, type: 2}
   m_IsPrefabParent: 0
@@ -1512,7 +1526,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1490385950}
           m_MethodName: TeleportRandomly
-          m_Mode: 0
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1724,3 +1738,21 @@ GameObject:
   m_PrefabParentObject: {fileID: 1251124450334416, guid: c12db6ac95da443448d6aa9e4cfc66c0,
     type: 2}
   m_PrefabInternal: {fileID: 873428114}
+--- !u!1 &2100663267 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 632161999, guid: 87c35d808850c410ca0e398a8da84e68,
+    type: 2}
+  m_PrefabInternal: {fileID: 1163767423}
+--- !u!114 &2100663268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2100663267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f5d450d1bd94c97b1dc8109b633ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  safetyRing: {fileID: 1725746395}
+  enableDebugLog: 1

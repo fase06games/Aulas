@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MonsterCounter : MonoBehaviour
 {
+
 	public int counter;
 	public TextMesh hudText;
 
@@ -11,10 +14,9 @@ public class MonsterCounter : MonoBehaviour
         counter = 0;
     }
 
-    public void Increment()
+    public void increment()
     {
     	counter += 1;
-    	Debug.Log("Monsters Collected: " + counter);
     	hudText.text = counter.ToString();
     }
 

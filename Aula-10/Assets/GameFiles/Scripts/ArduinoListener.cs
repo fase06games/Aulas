@@ -1,9 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
 
-public class ArduinoListener : MonoBehaviour
+public class ArduinoListener : Shootable
 {
     
 	SerialPort port = new SerialPort("COM4", 9600);
@@ -12,7 +12,7 @@ public class ArduinoListener : MonoBehaviour
     {
     	try
     	{
-			port.Open ();
+			port.Open();
         	port.ReadTimeout = 1;
     	}
         catch
@@ -21,7 +21,12 @@ public class ArduinoListener : MonoBehaviour
         }
     }
 
-    public bool IsShooting()
+    public override Vector3 GetVrGunRotation()
+    {
+        return new Vector3(0,0,0);
+    }
+
+    public override bool IsShooting()
     {
     	bool response = false;
 
@@ -29,7 +34,7 @@ public class ArduinoListener : MonoBehaviour
         {
         	try
         	{
-        		if(port.ReadByte() == 0)
+        		if(port.ReadByte() == 1)
         			response = true;
         		else
         			response = false;
